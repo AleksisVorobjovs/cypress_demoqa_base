@@ -4,10 +4,6 @@ class TextBoxPage extends BasePage {
   static get url() {
     return "/text-box";
   }
-
-  static get exampleElement() {
-    return cy.get("exampleSelector");
-  }
   static get nameElement() {
     return cy.get("#userName");
   }

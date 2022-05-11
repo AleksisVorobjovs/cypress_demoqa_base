@@ -4,7 +4,7 @@ import RadioButtonPage from "../../pageObjects/RadioButtonPage";
 import WebTablesPage from "../../pageObjects/WebTablesPage";
 import ButtonPage from "../../pageObjects/ButtonPage";
 import LinksPage from "../../pageObjects/LinksPage";
-
+import SelectablePage from "../../pageObjects/SelectablePage";
 context("Elements Page", () => {
   context("Text box scenarios", () => {
     beforeEach(() => {
@@ -113,9 +113,47 @@ context("Elements Page", () => {
     beforeEach(() => {
       LinksPage.visit();
     });
-    it.only("API intercept", () => {
+    it("API intercept", () => {
       LinksPage.createLink.click();
       LinksPage.linkResponse.should("contain","201");
     });
   });
+  context("Selectable test", () => {
+    beforeEach(() => {
+      SelectablePage.visit();
+    });
+    it.only("Click to change field state in selectable list tab", () => {
+      //Noklikot uz laukiem “Cras justo odio” un “Morbi leo risus”.
+      //Novalidēt, ka noklikotie lauki ir aktīvi. (.invoke('class')).
+      //Novalidēt, ka pārējie lauki nav mainījuši stāvokli.
+      SelectablePage.listValues.contains("Cras justo odio").click();
+      SelectablePage.listValues.contains("Morbi leo risus").click();
+
+      SelectablePage.listValues.invoke('slice',0,3).contains("Cras justo odio").should('have.class','active');
+      SelectablePage.listValues.invoke('slice',0,3).contains("Morbi leo risus").should('have.class','active');
+      SelectablePage.listValues.invoke('slice',0,3).contains("Dapibus ac facilisis in").should('not.have.class','active');
+      SelectablePage.listValues.invoke('slice',0,3).contains("Porta ac consectetur ac").should('not.have.class','active');
+    });
+    it.only("Click to change field state in selectable grid tab", () => {
+      //Atvērt sadaļu “Grid”.
+      //Noklikot laukus “Two”, “Four”, “Six” un “Eight”.
+      //Novalidēt, ka lauki “Two”, “Four”, “Six” un “Eight” ir aktīvi (.invoke('class')).
+      //Novalidēt, ka pārējie lauki nav mainījuši stāvokli.
+      SelectablePage.gridTab.click();
+      SelectablePage.gridContainer.contains("Two").click();
+      SelectablePage.gridContainer.contains("Four").click();
+      SelectablePage.gridContainer.contains("Six").click();
+      SelectablePage.gridContainer.contains("Eight").click();
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("One").should('not.have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Two").should('have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Three").should('not.have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Four").should('have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Five").should('not.have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Six").should('have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Seven").should('not.have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Eight").should('have.class','active');
+      SelectablePage.gridContainer.invoke('slice',0,8).contains("Nine").should('not.have.class','active');
+    });
+  });
+
 });

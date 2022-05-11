@@ -4,10 +4,6 @@ class WebTablePage extends BasePage {
   static get url() {
     return "/webtables";
   }
-  //example
-  static get exampleElement() {
-    return cy.get("exampleSelector");
-  } 
   static get addUser() {
     return cy.get("#addNewRecordButton");
   }

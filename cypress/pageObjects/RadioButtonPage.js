@@ -4,10 +4,6 @@ class RadioButtonPage extends BasePage {
   static get url() {
     return "/radio-button";
   }
-  //example
-  static get exampleElement() {
-    return cy.get("exampleSelector");
-  } 
   static get yesChecked() {
     return cy.get("#yesRadio");
   }

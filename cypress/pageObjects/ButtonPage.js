@@ -3,10 +3,6 @@ import BasePage from "./BasePage";
 class ButtonPage extends BasePage {
   static get url() {
     return "/buttons";
-  }
-  //example
-  static get exampleElement() {
-    return cy.get("exampleSelector");
   } 
   static get clickMeButton() {
     return cy.get(".btn-primary").contains(/^Click Me/);
